@@ -166,13 +166,12 @@ func buildInferenceRunWhere(filter repository.InferenceRunFilter) (string, []any
 	appendStringFilter("source_zone_id", filter.SourceZoneID)
 	appendStringFilter("target_zone_id", filter.TargetZoneID)
 	appendStringFilter("state", string(filter.State))
-	fromColumn, toColumn := filter.WindowColumns()
 	if filter.From != nil {
-		clauses = append(clauses, fromColumn+" >= ?")
+		clauses = append(clauses, "scheduled_start_at >= ?")
 		args = append(args, formatTime(*filter.From))
 	}
 	if filter.To != nil {
-		clauses = append(clauses, toColumn+" < ?")
+		clauses = append(clauses, "scheduled_start_at < ?")
 		args = append(args, formatTime(*filter.To))
 	}
 	if len(clauses) == 0 {

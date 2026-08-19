@@ -99,10 +99,6 @@ type InferenceRunFilter struct {
 	To           *time.Time
 }
 
-func (f InferenceRunFilter) WindowColumns() (string, string) {
-	return "scheduled_start_at", "expected_finish_at"
-}
-
 type InferenceRunPage struct {
 	Items []domain.InferenceRun
 	Total int
