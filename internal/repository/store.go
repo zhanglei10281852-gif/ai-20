@@ -99,8 +99,12 @@ type InferenceRunFilter struct {
 	To           *time.Time
 }
 
-func (f InferenceRunFilter) WindowColumns() (string, string) {
-	return "scheduled_start_at", "expected_finish_at"
+// WindowColumn is the single business-time dimension — the scheduled start
+// moment — that both From and To bounds filter against. The query contract
+// scopes only by scheduled start, so a run whose expected finish spills past
+// the window is still returned as long as its planned start falls inside.
+func (f InferenceRunFilter) WindowColumn() string {
+	return "scheduled_start_at"
 }
 
 type InferenceRunPage struct {
